@@ -1,0 +1,156 @@
+class Patient {
+    private int id;
+    private String name;
+    private int age;
+    private String address;
+    private String phone;
+
+    public Patient(int id, String name, int age, String address, String phone) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+        this.address = address;
+        this.phone = phone;
+    }
+
+    public void displayPatientInfo() {
+        System.out.println("Patient ID: " + id);
+        System.out.println("Name: " + name);
+        System.out.println("Age: " + age);
+        System.out.println("Address: " + address);
+        System.out.println("Phone: " + phone);
+    }
+
+    public int getId() {
+        return id;
+    }
+}
+
+// Appointment Class
+class Appointment {
+    private Patient patient;
+    private String doctor;
+    private Date appointmentDate;
+
+    public Appointment(Patient patient, String doctor, Date appointmentDate) {
+        this.patient = patient;
+        this.doctor = doctor;
+        this.appointmentDate = appointmentDate;
+    }
+
+    public void displayAppointment() {
+        System.out.println("Appointment Details:");
+        patient.displayPatientInfo();
+        System.out.println("Doctor: " + doctor);
+        System.out.println("Appointment Date: " + appointmentDate);
+    }
+}
+
+// Electronic Health Records (EHR) Class
+class EHR {
+    private Map<Integer, String> patientRecords = new HashMap<>();
+
+    public void addRecord(Patient patient, String record) {
+        patientRecords.put(patient.getId(), record);
+        System.out.println("Record added for patient: " + patient.getId());
+    }
+
+    public void viewRecord(int patientId) {
+        if (patientRecords.containsKey(patientId)) {
+            System.out.println("Patient ID: " + patientId);
+            System.out.println("Record: " + patientRecords.get(patientId));
+        } else {
+            System.out.println("No record found for Patient ID: " + patientId);
+        }
+    }
+}
+
+// Billing Class
+class Billing {
+    private Map<Integer, Double> patientBills = new HashMap<>();
+
+    public void generateBill(Patient patient, double amount) {
+        patientBills.put(patient.getId(), amount);
+        System.out.println("Bill generated for patient: " + patient.getId() + ", Amount: $" + amount);
+    }
+
+    public void viewBill(int patientId) {
+        if (patientBills.containsKey(patientId)) {
+            System.out.println("Patient ID: " + patientId);
+            System.out.println("Total Due: $" + patientBills.get(patientId));
+        } else {
+            System.out.println("No bill found for Patient ID: " + patientId);
+        }
+    }
+}
+
+// Inventory Management Class
+class Inventory {
+    private Map<String, Integer> supplies = new HashMap<>();
+
+    public void addSupply(String item, int quantity) {
+        supplies.put(item, supplies.getOrDefault(item, 0) + quantity);
+        System.out.println("Added " + quantity + " " + item + "(s) to inventory.");
+    }
+
+    public void viewInventory() {
+        System.out.println("Inventory:");
+        for (Map.Entry<String, Integer> entry : supplies.entrySet()) {
+            System.out.println(entry.getKey() + ": " + entry.getValue());
+        }
+    }
+}
+
+// Staff Class
+class Staff {
+    private List<String> staffMembers = new ArrayList<>();
+
+    public void addStaffMember(String name) {
+        staffMembers.add(name);
+        System.out.println("Staff member added: " + name);
+    }
+
+    public void viewStaff() {
+        System.out.println("Staff Members:");
+        for (String staff : staffMembers) {
+            System.out.println(staff);
+        }
+    }
+}
+
+// Main Hospital Management System Class
+public class HospitalManagementSystem {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Patient registration
+        Patient patient1 = new Patient(1, "John Doe", 45, "123 Main St", "555-1234");
+        patient1.displayPatientInfo();
+
+        // Appointment scheduling
+        Appointment appointment1 = new Appointment(patient1, "Dr. Smith", new Date());
+        appointment1.displayAppointment();
+
+        // EHR
+        EHR ehr = new EHR();
+        ehr.addRecord(patient1, "Patient diagnosed with hypertension.");
+        ehr.viewRecord(1);
+
+        // Billing
+        Billing billing = new Billing();
+        billing.generateBill(patient1, 250.50);
+        billing.viewBill(1);
+
+        // Inventory management
+        Inventory inventory = new Inventory();
+        inventory.addSupply("Bandages", 100);
+        inventory.addSupply("Syringes", 50);
+        inventory.viewInventory();
+
+        // Staff management
+        Staff staff = new Staff();
+        staff.addStaffMember("Dr. Alice");
+        staff.addStaffMember("Nurse Bob");
+        staff.viewStaff();
+    }
+}
